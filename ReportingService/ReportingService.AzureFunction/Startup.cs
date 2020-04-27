@@ -59,6 +59,9 @@ namespace ReportingService.AzureFunction
                 });
             }
 
+            IConfigurationSection applicationConfigSettings = config.GetSection("ApplicationConfig");
+            builder.Services.Configure<ApplicationConfig>(applicationConfigSettings);
+
             builder.Services.AddTransient<IHttpClientWrapper, HttpClientWrapper>();
             builder.Services.AddSingleton<IReportsService, ReportsService>();
             builder.Services.AddSingleton<IConnectCommunicationService, ConnectCommunicationService>();
