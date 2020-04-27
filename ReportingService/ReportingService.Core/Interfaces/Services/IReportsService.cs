@@ -6,7 +6,7 @@ namespace ReportingService.Core.Interfaces.Services
 {
     public interface IReportsService
     {
-        int GetDistinctChampionUserCount();
+        void CountReport();
 
     }
 }

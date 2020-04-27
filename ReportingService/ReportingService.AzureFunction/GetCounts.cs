@@ -18,9 +18,8 @@ namespace ReportingService.AzureFunction
         [FunctionName("GetCounts")]
         public void Run([TimerTrigger("00:01:00")]TimerInfo myTimer, ILogger log)
         {
-            var result = _reportsService.GetDistinctChampionUserCount();
+            _reportsService.CountReport();
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
-            log.LogInformation(result.ToString());
         }
     }
 }
