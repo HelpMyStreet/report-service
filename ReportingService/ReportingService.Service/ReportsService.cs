@@ -22,7 +22,7 @@ namespace ReportingService.Service
             var result = _connectUserService.GetDistinctChampionUserCount().Result;
             _connectCommunicationService.SendEmail(new HelpMyStreet.Contracts.CommunicationService.Request.SendEmailRequest()
             {
-                Subject = "Count " + DateTime.Now.ToString(),
+                Subject = "Report for " + DateTime.Now.ToString(),
                 ToAddress = _applicationConfig.Value.RecipientEmailAddress,
                 ToName = _applicationConfig.Value.RecipientName,
                 BodyHTML = result.ToString(),
