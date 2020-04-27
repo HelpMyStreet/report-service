@@ -1,13 +1,9 @@
-﻿using AutoMapper;
-using ReportingService.Core.Interfaces.Repositories;
-using ReportingService.Handlers;
-using ReportingService.Mappers;
-using ReportingService.Repo;
-using MediatR;
-using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
+using ReportingService.CommunicationService;
+using ReportingService.Core.Interfaces.Services;
+using ReportingService.Service;
+using ReportingService.UserService;
 
 [assembly: FunctionsStartup(typeof(ReportingService.AzureFunction.Startup))]
 namespace ReportingService.AzureFunction
@@ -16,12 +12,9 @@ namespace ReportingService.AzureFunction
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddMediatR(typeof(FunctionAHandler).Assembly);
-            builder.Services.AddAutoMapper(typeof(AddressDetailsProfile).Assembly);
-
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                   options.UseInMemoryDatabase(databaseName: "ReportingService.AzureFunction"));
-            builder.Services.AddTransient<IRepository, Repository>();
+            builder.Services.AddSingleton<IReportsService, ReportsService>();
+            builder.Services.AddSingleton<IConnectCommunicationService, ConnectCommunicationService>();
+            builder.Services.AddSingleton<IConnectUserService, ConnectUserService>();
         }
     }
 }

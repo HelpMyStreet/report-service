@@ -14,15 +14,9 @@
 		<PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.28" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference ReplaceParameters="true" Include="..\ReportingService.Handlers\ReportingService.Handlers.csproj">
-			<Name >ReportingService.Handlers</Name>
-		</ProjectReference>
-		<ProjectReference ReplaceParameters="true" Include="..\ReportingService.Mappers\ReportingService.Mappers.csproj">
-			<Name >ReportingService.Mappers</Name>
-		</ProjectReference>
-		<ProjectReference ReplaceParameters="true" Include="..\ReportingService.Repo\ReportingService.Repo.csproj">
-			<Name >ReportingService.Repo</Name>
-		</ProjectReference>
+		<ProjectReference Include="..\ReportingService.CommunicationService\ReportingService.CommunicationService.csproj" />
+		<ProjectReference Include="..\ReportingService.Service\ReportingService.Service.csproj" />
+		<ProjectReference Include="..\ReportingService.UserService\ReportingService.UserService.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Update="host.json">
