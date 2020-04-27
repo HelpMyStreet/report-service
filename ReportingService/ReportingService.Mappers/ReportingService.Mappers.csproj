@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="9.0.0" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference ReplaceParameters="true" Include="..\ReportingService.Core\ReportingService.Core.csproj">
+			<Name >ReportingService.Core</Name>
+		</ProjectReference>
+		<ProjectReference ReplaceParameters="true" Include="..\ReportingService.Repo\ReportingService.Repo.csproj">
+			<Name >ReportingService.Repo</Name>
+		</ProjectReference>
+	</ItemGroup>
+</Project>
