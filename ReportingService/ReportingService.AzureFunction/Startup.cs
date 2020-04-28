@@ -3,6 +3,8 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Polly;
+using Polly.Extensions.Http;
 using ReportingService.CommunicationService;
 using ReportingService.Core.Configuration;
 using ReportingService.Core.Interfaces.Services;
@@ -36,6 +38,10 @@ namespace ReportingService.AzureFunction
 
             Dictionary<HttpClientConfigName, ApiConfig> httpClientConfigs = config.GetSection("Apis").Get<Dictionary<HttpClientConfigName, ApiConfig>>();
 
+            var retryPolicy = HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .RetryAsync(3);
+
             foreach (KeyValuePair<HttpClientConfigName, ApiConfig> httpClientConfig in httpClientConfigs)
             {
 
@@ -56,7 +62,9 @@ namespace ReportingService.AzureFunction
                 {
                     MaxConnectionsPerServer = httpClientConfig.Value.MaxConnectionsPerServer ?? 15,
                     AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
-                });
+                })
+                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(30)))
+                .AddPolicyHandler(retryPolicy);
             }
 
             IConfigurationSection applicationConfigSettings = config.GetSection("ApplicationConfig");

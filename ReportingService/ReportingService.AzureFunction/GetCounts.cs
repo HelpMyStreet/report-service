@@ -18,8 +18,15 @@ namespace ReportingService.AzureFunction
         [FunctionName("GetCounts")]
         public void Run([TimerTrigger("0 0 */2 * * *")]TimerInfo myTimer, ILogger log)
         {
-            _reportsService.CountReport();
-            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+            try
+            {
+                _reportsService.CountReport();
+                log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+            }
+            catch(Exception ex)
+            {
+                log.LogError("Unhandled error in GetCounts", ex);
+            }
 
         }
     }
