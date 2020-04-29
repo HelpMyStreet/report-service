@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using HelpMyStreet.Contracts.ReportService.Response;
+using Newtonsoft.Json;
 using ReportingService.Core.Configuration;
 using ReportingService.Core.Interfaces.Services;
 using ReportingService.Core.Utils;
@@ -19,10 +20,10 @@ namespace ReportingService.UserService
             _httpClientWrapper = httpClientWrapper;
         }
 
-        public async Task<int> GetDistinctChampionUserCount()
+        public async Task<GetReportResponse> GetReport()
         {
-            CountResponse result;
-            string path = $"/api/GetDistinctChampionUserCount";
+            GetReportResponse result;
+            string path = $"/api/GetReport";
             string absolutePath = $"{path}";
 
             using (HttpResponseMessage response = await _httpClientWrapper.GetAsync(HttpClientConfigName.UserService, absolutePath, CancellationToken.None).ConfigureAwait(false))
@@ -30,10 +31,10 @@ namespace ReportingService.UserService
                 response.EnsureSuccessStatusCode();
                 string content = await response.Content.ReadAsStringAsync();
 
-                result = JsonConvert.DeserializeObject<CountResponse>(content);
+                result = JsonConvert.DeserializeObject<GetReportResponse>(content);
             }
 
-            return result != null ? result.Count : 0;
+            return result;
         }
     }
 }
