@@ -1,5 +1,6 @@
 ﻿using HelpMyStreet.Contracts.CommunicationService.Request;
 using HelpMyStreet.Contracts.CommunicationService.Response;
+using HelpMyStreet.Contracts.RequestService.Response;
 using HelpMyStreet.Contracts.Shared;
 using Newtonsoft.Json;
 using ReportingService.Core.Configuration;
@@ -29,7 +30,7 @@ namespace ReportingService.CommunicationService
             using (HttpResponseMessage response = await _httpClientWrapper.PostAsync(HttpClientConfigName.CommunicationService, path, jsonContent,CancellationToken.None).ConfigureAwait(false))
             {
                 string jsonResponse = await response.Content.ReadAsStringAsync();
-                var emailSentResponse = JsonConvert.DeserializeObject<ResponseWrapper<SendEmailResponse, CommunicationServiceErrorCode>>(jsonResponse);
+                var emailSentResponse = JsonConvert.DeserializeObject<ResponseWrapper<SendEmailResponse, RequestServiceErrorCode>>(jsonResponse);
                 if (emailSentResponse.HasContent && emailSentResponse.IsSuccessful)
                 {
                     return emailSentResponse.Content.Success;

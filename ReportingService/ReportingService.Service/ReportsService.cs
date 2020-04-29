@@ -13,31 +13,39 @@ namespace ReportingService.Service
         private readonly IConnectUserService _connectUserService;
         private readonly IConnectCommunicationService _connectCommunicationService;
         private readonly IOptions<ApplicationConfig> _applicationConfig;
+        private readonly IConnectRequestService _connectRequestService;
 
-        public ReportsService(IConnectUserService connectUserService, IConnectCommunicationService connectCommunicationService, IOptions<ApplicationConfig> applicationConfig)
+        public ReportsService(IConnectUserService connectUserService, IConnectCommunicationService connectCommunicationService, IOptions<ApplicationConfig> applicationConfig, IConnectRequestService connectRequestService)
         {
             _connectUserService = connectUserService;
             _connectCommunicationService = connectCommunicationService;
             _applicationConfig = applicationConfig;
+            _connectRequestService = connectRequestService;
         }
         public void CountReport()
         {
-            var result = _connectUserService.GetReport().Result;
-            string subject = $"HelpMyStreet Monitoring {DateTime.Now:yyyy-MM-dd}, {DateTime.Now.AddHours(-2).ToUniversalTime():HH:mm:ss} - {DateTime.Now.ToUniversalTime():HH:mm:ss}";
-
-            if(result==null)
+            var userReport = _connectUserService.GetReport().Result;
+            var requestReport = _connectRequestService.GetReport().Result;
+            
+            if(userReport == null && requestReport == null)
             {
                 return;
             }
-            string body = GetHtmlTable(result.ReportItems);
+
+            string subject = $"HelpMyStreet Monitoring {DateTime.Now:yyyy-MM-dd}, {DateTime.Now.AddHours(-2).ToUniversalTime():HH:mm:ss} - {DateTime.Now.ToUniversalTime():HH:mm:ss}";
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine(GetHtmlTable(userReport.ReportItems));
+            stringBuilder.AppendLine("<br>");
+            stringBuilder.AppendLine(GetHtmlTable(requestReport.ReportItems));
 
             _connectCommunicationService.SendEmail(new HelpMyStreet.Contracts.CommunicationService.Request.SendEmailRequest()
             {
                 Subject = subject ,
                 ToAddress = _applicationConfig.Value.RecipientEmailAddress,
                 ToName = _applicationConfig.Value.RecipientName,
-                BodyHTML = body,
-                BodyText = body
+                BodyHTML = stringBuilder.ToString(),
+                BodyText = stringBuilder.ToString()
             });
         }
 

@@ -9,6 +9,7 @@ using ReportingService.CommunicationService;
 using ReportingService.Core.Configuration;
 using ReportingService.Core.Interfaces.Services;
 using ReportingService.Core.Utils;
+using ReportingService.RequestService;
 using ReportingService.Service;
 using ReportingService.UserService;
 using System;
@@ -81,6 +82,7 @@ namespace ReportingService.AzureFunction
             builder.Services.AddSingleton<IReportsService, ReportsService>();
             builder.Services.AddSingleton<IConnectCommunicationService, ConnectCommunicationService>();
             builder.Services.AddSingleton<IConnectUserService, ConnectUserService>();
+            builder.Services.AddSingleton<IConnectRequestService, ConnectRequestService>();
         }
     }
 }

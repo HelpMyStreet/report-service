@@ -7,6 +7,7 @@ namespace ReportingService.Core.Configuration
     public enum HttpClientConfigName
     {
         CommunicationService = 1,
-        UserService = 2
+        UserService = 2,
+        RequestService = 3
     }
 }
