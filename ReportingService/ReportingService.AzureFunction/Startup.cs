@@ -42,6 +42,14 @@ namespace ReportingService.AzureFunction
                 .HandleTransientHttpError()
                 .RetryAsync(3);
 
+            IEnumerable<TimeSpan> timeSpans = new[]
+            {
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(5),
+                TimeSpan.FromSeconds(10),
+                TimeSpan.FromSeconds(20)
+            };
+
             foreach (KeyValuePair<HttpClientConfigName, ApiConfig> httpClientConfig in httpClientConfigs)
             {
 
@@ -49,7 +57,7 @@ namespace ReportingService.AzureFunction
                 {
                     c.BaseAddress = new Uri(httpClientConfig.Value.BaseAddress);
 
-                    c.Timeout = httpClientConfig.Value.Timeout ?? new TimeSpan(0, 0, 0, 15);
+                    c.Timeout = httpClientConfig.Value.Timeout ?? new TimeSpan(0, 0, 0, 30);
 
                     foreach (KeyValuePair<string, string> header in httpClientConfig.Value.Headers)
                     {
@@ -63,8 +71,7 @@ namespace ReportingService.AzureFunction
                     MaxConnectionsPerServer = httpClientConfig.Value.MaxConnectionsPerServer ?? 15,
                     AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
                 })
-                .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(30)))
-                .AddPolicyHandler(retryPolicy);
+                .AddTransientHttpErrorPolicy(x => x.WaitAndRetryAsync(timeSpans));
             }
 
             IConfigurationSection applicationConfigSettings = config.GetSection("ApplicationConfig");
