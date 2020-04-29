@@ -20,12 +20,13 @@ namespace ReportingService.AzureFunction
         {
             try
             {
+                log.LogInformation($"GetCounts started at: {DateTime.Now}");
                 _reportsService.CountReport();
-                log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+                log.LogInformation($"GetCounts completed at: {DateTime.Now}");
             }
             catch(Exception ex)
             {
-                log.LogError("Unhandled error in GetCounts", ex);
+                log.LogError("Unhandled error in GetCounts ", ex.ToString());
             }
 
         }
