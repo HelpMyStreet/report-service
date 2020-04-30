@@ -26,7 +26,11 @@ namespace ReportingService.AzureFunction
 
 
             }
-            catch(Exception ex)
+            catch(AggregateException exc)
+            {
+                log.LogError(exc.Flatten().ToString());
+            }
+            catch (Exception ex)
             {
                 log.LogError($"Unhandled error in GetCounts {ex}" );
             }
