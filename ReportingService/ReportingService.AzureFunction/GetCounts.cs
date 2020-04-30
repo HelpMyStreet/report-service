@@ -23,6 +23,7 @@ namespace ReportingService.AzureFunction
                 log.LogInformation($"GetCounts started at: {DateTime.Now}");
                 _reportsService.CountReport();
                 log.LogInformation($"GetCounts completed at: {DateTime.Now}");
+
             }
             catch(Exception ex)
             {
