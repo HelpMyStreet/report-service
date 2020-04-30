@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using HelpMyStreet.Utils.PollyPolicies;
 
 [assembly: FunctionsStartup(typeof(ReportingService.AzureFunction.Startup))]
 namespace ReportingService.AzureFunction
@@ -39,17 +40,8 @@ namespace ReportingService.AzureFunction
 
             Dictionary<HttpClientConfigName, ApiConfig> httpClientConfigs = config.GetSection("Apis").Get<Dictionary<HttpClientConfigName, ApiConfig>>();
 
-            var retryPolicy = HttpPolicyExtensions
-                .HandleTransientHttpError()
-                .RetryAsync(3);
-
-            IEnumerable<TimeSpan> timeSpans = new[]
-            {
-                TimeSpan.FromSeconds(1),
-                TimeSpan.FromSeconds(5),
-                TimeSpan.FromSeconds(10),
-                TimeSpan.FromSeconds(20)
-            };
+            // DI doesn't work in the Startup class in the Azure Functions version we're using
+            PollyHttpPolicies pollyHttpPolicies = new PollyHttpPolicies(new PollyHttpPoliciesConfig());         
 
             foreach (KeyValuePair<HttpClientConfigName, ApiConfig> httpClientConfig in httpClientConfigs)
             {
@@ -72,7 +64,7 @@ namespace ReportingService.AzureFunction
                     MaxConnectionsPerServer = httpClientConfig.Value.MaxConnectionsPerServer ?? 15,
                     AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
                 })
-                .AddTransientHttpErrorPolicy(x => x.WaitAndRetryAsync(timeSpans));
+                .AddPolicyHandler(pollyHttpPolicies.InternalHttpRetryPolicy);
             }
 
             IConfigurationSection applicationConfigSettings = config.GetSection("ApplicationConfig");
