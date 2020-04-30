@@ -24,6 +24,7 @@ namespace ReportingService.AzureFunction
                 _reportsService.CountReport();
                 log.LogInformation($"GetCounts completed at: {DateTime.Now}");
 
+
             }
             catch(Exception ex)
             {
