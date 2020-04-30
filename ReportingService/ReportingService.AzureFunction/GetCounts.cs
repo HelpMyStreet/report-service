@@ -16,7 +16,7 @@ namespace ReportingService.AzureFunction
         }
 
         [FunctionName("GetCounts")]
-        public void Run([TimerTrigger("00:01:00")]TimerInfo myTimer, ILogger log)
+        public void Run([TimerTrigger("0 0 */2 * * *")]TimerInfo myTimer, ILogger log)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace ReportingService.AzureFunction
             }
             catch(Exception ex)
             {
-                log.LogError("Unhandled error in GetCounts ", ex.ToString());
+                log.LogError($"Unhandled error in GetCounts {ex}" );
             }
 
         }
