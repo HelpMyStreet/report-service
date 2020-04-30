@@ -16,7 +16,7 @@ namespace ReportingService.AzureFunction
         }
 
         [FunctionName("GetCounts")]
-        public void Run([TimerTrigger("0 0 6,8,10,12,14,16,18 * * *")]TimerInfo myTimer, ILogger log)
+        public void Run([TimerTrigger("0 0 0,8,10,12,14,16,18,20,22 * * *")]TimerInfo myTimer, ILogger log)
         {
             try
             {
