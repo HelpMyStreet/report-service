@@ -4,6 +4,7 @@ using ReportingService.Core.Configuration;
 using ReportingService.Core.Interfaces.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ReportingService.Service
@@ -35,6 +36,7 @@ namespace ReportingService.Service
             string subject = $"HelpMyStreet Monitoring {DateTime.Now:yyyy-MM-dd}, {DateTime.Now.AddHours(-2).ToUniversalTime():HH:mm:ss} - {DateTime.Now.ToUniversalTime():HH:mm:ss}";
 
             StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine(StyleTables());
             stringBuilder.AppendLine(GetHtmlTable(userReport.ReportItems));
             stringBuilder.AppendLine("<br>");
             stringBuilder.AppendLine(GetHtmlTable(requestReport.ReportItems));
@@ -49,6 +51,15 @@ namespace ReportingService.Service
             });
         }
 
+        private string StyleTables()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("<style>");
+            sb.AppendLine("th {background-color: #001489; color: #ffffff; } tr{ background-color: #e8f4fb}");
+            sb.AppendLine("</style>");
+            return sb.ToString();
+        }
+
         private string GetHtmlTable(List<ReportItem> reportItems)
         {
             if(reportItems == null || reportItems.Count==0)
@@ -56,6 +67,8 @@ namespace ReportingService.Service
                 return string.Empty;
             }
 
+            var totalsRow = reportItems.First();
+ 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("<table border=1>");
             sb.AppendLine("<tr>");
@@ -69,14 +82,22 @@ namespace ReportingService.Service
             {
                 sb.AppendLine("<tr>");
                 sb.AppendLine($"<td>{reportItem.Section}</td>");
-                sb.AppendLine($"<td>{reportItem.Last2Hours}</td>");
-                sb.AppendLine($"<td>{reportItem.Today}</td>");
-                sb.AppendLine($"<td>{reportItem.SinceLaunch}</td>");
+                sb.AppendLine($"<td>{reportItem.Last2Hours} ({GetPercentage(totalsRow.Last2Hours, reportItem.Last2Hours)})</td>");
+                sb.AppendLine($"<td>{reportItem.Today} ({GetPercentage(totalsRow.Today, reportItem.Today)})</td>");
+                sb.AppendLine($"<td>{reportItem.SinceLaunch} ({GetPercentage(totalsRow.SinceLaunch, reportItem.SinceLaunch)})</td>");
                 sb.AppendLine("</tr>");
             }
             sb.AppendLine("</table>");
 
             return sb.ToString();
         }
+        private string GetPercentage(int total, int value)
+        {
+            if (total == 0) return "0%";
+            double percentage = (((double)value / (double)total) * 100);
+            return $"{Math.Round(percentage, 2).ToString()}%";
+        }
     }
+ 
 }
+
