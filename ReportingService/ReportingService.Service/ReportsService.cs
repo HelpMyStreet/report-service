@@ -82,8 +82,8 @@ namespace ReportingService.Service
             {
                 sb.AppendLine("<tr>");
                 sb.AppendLine($"<td>{reportItem.Section}</td>");
-                sb.AppendLine($"<td>{reportItem.Last2Hours} ({GetPercentage(totalsRow.Last2Hours, reportItem.Last2Hours)})</td>");
-                sb.AppendLine($"<td>{reportItem.Today} ({GetPercentage(totalsRow.Today, reportItem.Today)})</td>");
+                sb.AppendLine($"<td>{reportItem.Last2Hours}</td>");
+                sb.AppendLine($"<td>{reportItem.Today}</td>");
                 sb.AppendLine($"<td>{reportItem.SinceLaunch} ({GetPercentage(totalsRow.SinceLaunch, reportItem.SinceLaunch)})</td>");
                 sb.AppendLine("</tr>");
             }
@@ -95,7 +95,7 @@ namespace ReportingService.Service
         {
             if (total == 0) return "0%";
             double percentage = (((double)value / (double)total) * 100);
-            return $"{Math.Round(percentage, 2).ToString()}%";
+            return $"{Math.Round(percentage,0)}%";
         }
     }
  
