@@ -8,6 +8,7 @@ namespace ReportingService.Core.Configuration
     {
         CommunicationService = 1,
         UserService = 2,
-        RequestService = 3
+        RequestService = 3,
+        VerificationService = 4
     }
 }
