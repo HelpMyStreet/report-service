@@ -15,20 +15,29 @@ namespace ReportingService.Service
         private readonly IConnectCommunicationService _connectCommunicationService;
         private readonly IOptions<ApplicationConfig> _applicationConfig;
         private readonly IConnectRequestService _connectRequestService;
+        private readonly IConnectVerificationService _connectVerificationService;
 
-        public ReportsService(IConnectUserService connectUserService, IConnectCommunicationService connectCommunicationService, IOptions<ApplicationConfig> applicationConfig, IConnectRequestService connectRequestService)
+        public ReportsService(
+            IConnectUserService connectUserService,
+            IConnectCommunicationService connectCommunicationService,
+            IConnectRequestService connectRequestService,
+            IConnectVerificationService connectVerificationService,
+            IOptions<ApplicationConfig> applicationConfig 
+            )
         {
             _connectUserService = connectUserService;
             _connectCommunicationService = connectCommunicationService;
-            _applicationConfig = applicationConfig;
             _connectRequestService = connectRequestService;
+            _connectVerificationService = connectVerificationService;
+            _applicationConfig = applicationConfig;
         }
         public void CountReport()
         {
             var userReport = _connectUserService.GetReport().Result;
             var requestReport = _connectRequestService.GetReport().Result;
+            var verificationReport = _connectVerificationService.GetReport().Result;
             
-            if(userReport == null && requestReport == null)
+            if(userReport == null && requestReport == null && verificationReport == null)
             {
                 return;
             }
@@ -37,8 +46,11 @@ namespace ReportingService.Service
 
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(StyleTables());
+            stringBuilder.AppendLine("<h2>User Service</h2>");
             stringBuilder.AppendLine(GetHtmlTable(userReport.ReportItems));
-            stringBuilder.AppendLine("<br>");
+            stringBuilder.AppendLine("<h2>Verification Service</h2>");
+            stringBuilder.AppendLine(GetHtmlTable(verificationReport.ReportItems));
+            stringBuilder.AppendLine("<h2>Request Service</h2>");
             stringBuilder.AppendLine(GetHtmlTable(requestReport.ReportItems));
 
             _connectCommunicationService.SendEmail(new HelpMyStreet.Contracts.CommunicationService.Request.SendEmailRequest()

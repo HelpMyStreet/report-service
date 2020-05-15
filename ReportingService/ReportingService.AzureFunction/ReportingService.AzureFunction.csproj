@@ -16,6 +16,7 @@
 		<PackageReference Include="NewRelic.Agent" Version="8.26.630" />
 	</ItemGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\..\ReportingService.VerificationService\ReportingService.VerificationService.csproj" />
 		<ProjectReference Include="..\ReportingService.CommunicationService\ReportingService.CommunicationService.csproj" />
 		<ProjectReference Include="..\ReportingService.RequestService\ReportingService.RequestService.csproj" />
 		<ProjectReference Include="..\ReportingService.Service\ReportingService.Service.csproj" />

@@ -12,6 +12,7 @@ using ReportingService.Core.Utils;
 using ReportingService.RequestService;
 using ReportingService.Service;
 using ReportingService.UserService;
+using ReportingService.VerificationService;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -83,6 +84,7 @@ namespace ReportingService.AzureFunction
             builder.Services.AddSingleton<IConnectCommunicationService, ConnectCommunicationService>();
             builder.Services.AddSingleton<IConnectUserService, ConnectUserService>();
             builder.Services.AddSingleton<IConnectRequestService, ConnectRequestService>();
+            builder.Services.AddSingleton<IConnectVerificationService, ConnectVerificationService>();
         }
     }
 }
