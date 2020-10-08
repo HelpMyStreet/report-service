@@ -1,4 +1,6 @@
 ﻿using HelpMyStreet.Contracts.ReportService.Response;
+using HelpMyStreet.Contracts.Shared;
+using HelpMyStreet.Contracts.UserService.Response;
 using Newtonsoft.Json;
 using ReportingService.Core.Configuration;
 using ReportingService.Core.Interfaces.Services;
@@ -22,7 +24,7 @@ namespace ReportingService.UserService
 
         public async Task<GetReportResponse> GetReport()
         {
-            GetReportResponse result;
+            GetReportResponse result = null;
             string path = $"/api/GetReport";
             string absolutePath = $"{path}";
 
@@ -30,8 +32,11 @@ namespace ReportingService.UserService
             {
                 response.EnsureSuccessStatusCode();
                 string content = await response.Content.ReadAsStringAsync();
-
-                result = JsonConvert.DeserializeObject<GetReportResponse>(content);
+                var requestResponse = JsonConvert.DeserializeObject<ResponseWrapper<GetReportResponse, UserServiceErrorCode>>(content);
+                if (requestResponse.HasContent && requestResponse.IsSuccessful)
+                {
+                    result = requestResponse.Content;
+                }
             }
 
             return result;
