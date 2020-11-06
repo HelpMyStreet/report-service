@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs.Host.Bindings;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -9,6 +10,7 @@ using ReportingService.CommunicationService;
 using ReportingService.Core.Configuration;
 using ReportingService.Core.Interfaces.Services;
 using ReportingService.Core.Utils;
+using ReportingService.Repo;
 using ReportingService.RequestService;
 using ReportingService.Service;
 using ReportingService.UserService;
@@ -79,12 +81,39 @@ namespace ReportingService.AzureFunction
             IConfigurationSection applicationConfigSettings = config.GetSection("ApplicationConfig");
             builder.Services.Configure<ApplicationConfig>(applicationConfigSettings);
 
+            IConfigurationSection connectionStringSettings = config.GetSection("ConnectionStrings");
+            builder.Services.Configure<ConnectionStrings>(connectionStringSettings);
+
+            ConnectionStrings connectionStrings = new ConnectionStrings();
+            connectionStringSettings.Bind(connectionStrings);
+
             builder.Services.AddTransient<IHttpClientWrapper, HttpClientWrapper>();
             builder.Services.AddSingleton<IReportsService, ReportsService>();
             builder.Services.AddSingleton<IConnectCommunicationService, ConnectCommunicationService>();
             builder.Services.AddSingleton<IConnectUserService, ConnectUserService>();
             builder.Services.AddSingleton<IConnectRequestService, ConnectRequestService>();
             builder.Services.AddSingleton<IConnectVerificationService, ConnectVerificationService>();
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                    ConfigureDbContextOptionsBuilder(options, connectionStrings.ReportingService),
+                ServiceLifetime.Transient
+            );
+
+            // automatically apply EF migrations
+            // DbContext is being created manually instead of through DI as it throws an exception and I've not managed to find a way to solve it yet: 
+            // 'Unable to resolve service for type 'Microsoft.Azure.WebJobs.Script.IFileLoggingStatusManager' while attempting to activate 'Microsoft.Azure.WebJobs.Script.Diagnostics.HostFileLoggerProvider'.'
+            DbContextOptionsBuilder<ApplicationDbContext> dbContextOptionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            ConfigureDbContextOptionsBuilder(dbContextOptionsBuilder, connectionStrings.ReportingService);
+            ApplicationDbContext dbContext = new ApplicationDbContext(dbContextOptionsBuilder.Options);
+
+            dbContext.Database.Migrate();
+        }
+
+        private void ConfigureDbContextOptionsBuilder(DbContextOptionsBuilder options, string connectionString)
+        {
+            options
+                .UseSqlServer(connectionString)
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
         }
     }
 }
