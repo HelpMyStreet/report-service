@@ -19,9 +19,11 @@
 		<ProjectReference Include="..\..\ReportingService.Repo\ReportingService.Repo.csproj" />
 		<ProjectReference Include="..\..\ReportingService.VerificationService\ReportingService.VerificationService.csproj" />
 		<ProjectReference Include="..\ReportingService.CommunicationService\ReportingService.CommunicationService.csproj" />
+		<ProjectReference Include="..\ReportingService.Repo\ReportingService.Repo.csproj" />
 		<ProjectReference Include="..\ReportingService.RequestService\ReportingService.RequestService.csproj" />
 		<ProjectReference Include="..\ReportingService.Service\ReportingService.Service.csproj" />
 		<ProjectReference Include="..\ReportingService.UserService\ReportingService.UserService.csproj" />
+		<ProjectReference Include="..\ReportingService.VerificationService\ReportingService.VerificationService.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Update="host.json">
