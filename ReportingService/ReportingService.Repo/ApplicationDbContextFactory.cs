@@ -19,8 +19,8 @@ namespace ReportingService.Repo
 
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(azureFunctionDirectory)
-                .AddJsonFile("appsettings.json")
-                .AddJsonFile("local.settings.json")
+                .AddJsonFile("appsettings.json",true)
+                .AddJsonFile("local.settings.json", true)
                 .Build();
 
             var connectionStringSettings = configuration.GetSection("ConnectionStrings");
