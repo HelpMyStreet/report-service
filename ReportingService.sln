@@ -7,16 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportingService.AzureFunct
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportingService.Core", "ReportingService\ReportingService.Core\ReportingService.Core.csproj", "{18701303-5A7A-432D-A034-C19B43B0D314}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportingService.Service", "ReportingService\ReportingService.Service\ReportingService.Service.csproj", "{C0B4E83A-3147-4409-9C1F-EE202DFE6964}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportingService.CommunicationService", "ReportingService\ReportingService.CommunicationService\ReportingService.CommunicationService.csproj", "{EBD68EB5-6ECD-40AC-80DD-36A2DC7AEDFE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportingService.UserService", "ReportingService\ReportingService.UserService\ReportingService.UserService.csproj", "{B32B4496-A26C-404D-8E25-1F4B7B404917}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportingService.RequestService", "ReportingService\ReportingService.RequestService\ReportingService.RequestService.csproj", "{93133497-CE3E-44E8-9E85-89F317440F31}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportingService.VerificationService", "ReportingService.VerificationService\ReportingService.VerificationService.csproj", "{0660DA7E-5397-4CF9-AA44-B212A3D46873}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,26 +21,6 @@ Global
 		{18701303-5A7A-432D-A034-C19B43B0D314}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18701303-5A7A-432D-A034-C19B43B0D314}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18701303-5A7A-432D-A034-C19B43B0D314}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C0B4E83A-3147-4409-9C1F-EE202DFE6964}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0B4E83A-3147-4409-9C1F-EE202DFE6964}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0B4E83A-3147-4409-9C1F-EE202DFE6964}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0B4E83A-3147-4409-9C1F-EE202DFE6964}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EBD68EB5-6ECD-40AC-80DD-36A2DC7AEDFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EBD68EB5-6ECD-40AC-80DD-36A2DC7AEDFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EBD68EB5-6ECD-40AC-80DD-36A2DC7AEDFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EBD68EB5-6ECD-40AC-80DD-36A2DC7AEDFE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B32B4496-A26C-404D-8E25-1F4B7B404917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B32B4496-A26C-404D-8E25-1F4B7B404917}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B32B4496-A26C-404D-8E25-1F4B7B404917}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B32B4496-A26C-404D-8E25-1F4B7B404917}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93133497-CE3E-44E8-9E85-89F317440F31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93133497-CE3E-44E8-9E85-89F317440F31}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93133497-CE3E-44E8-9E85-89F317440F31}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93133497-CE3E-44E8-9E85-89F317440F31}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0660DA7E-5397-4CF9-AA44-B212A3D46873}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0660DA7E-5397-4CF9-AA44-B212A3D46873}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0660DA7E-5397-4CF9-AA44-B212A3D46873}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0660DA7E-5397-4CF9-AA44-B212A3D46873}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
