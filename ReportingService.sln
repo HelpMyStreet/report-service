@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportingService.AzureFunction", "ReportingService\ReportingService.AzureFunction\ReportingService.AzureFunction.csproj", "{E805F8CA-EE3A-450A-8087-56E4148C0A8D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportingService.Core", "ReportingService\ReportingService.Core\ReportingService.Core.csproj", "{18701303-5A7A-432D-A034-C19B43B0D314}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{E805F8CA-EE3A-450A-8087-56E4148C0A8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E805F8CA-EE3A-450A-8087-56E4148C0A8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E805F8CA-EE3A-450A-8087-56E4148C0A8D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18701303-5A7A-432D-A034-C19B43B0D314}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18701303-5A7A-432D-A034-C19B43B0D314}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18701303-5A7A-432D-A034-C19B43B0D314}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18701303-5A7A-432D-A034-C19B43B0D314}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
