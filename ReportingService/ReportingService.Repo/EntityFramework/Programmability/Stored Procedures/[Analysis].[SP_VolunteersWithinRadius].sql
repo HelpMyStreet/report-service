@@ -3,7 +3,7 @@
 	,@Activity VARCHAR(100)
 
   AS
-
+  --DummyCommit
   DECLARE	@Coordinates GEOGRAPHY
 			,@ActivityID INT 
 
