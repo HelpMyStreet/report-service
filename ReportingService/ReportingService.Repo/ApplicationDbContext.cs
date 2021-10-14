@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ReportingService.Repo.EntityFramework.Models;
 using ReportingService.Repo.Extensions;
+using ReportingService.Repo.Helpers;
 using Scaffolding.Models;
 using System;
 using System.Collections.Generic;
@@ -4378,7 +4379,10 @@ namespace ReportingService.Repo
                 entity.Property(e => e.RoleName)
                     .IsRequired()
                     .HasMaxLength(50)
+                    .ValueGeneratedOnAdd()
                     .IsUnicode(false);
+
+                entity.SetQuickSightRolesData();
             });
 
             modelBuilder.Entity<QuicksightRoleGroups>(entity =>

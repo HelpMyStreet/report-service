@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="HelpMyStreet.CoreV3.Utils" Version="1.1.824" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
 	  <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="1.6.0" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
