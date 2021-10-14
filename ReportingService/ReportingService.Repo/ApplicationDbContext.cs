@@ -4379,7 +4379,6 @@ namespace ReportingService.Repo
                 entity.Property(e => e.RoleName)
                     .IsRequired()
                     .HasMaxLength(50)
-                    .ValueGeneratedOnAdd()
                     .IsUnicode(false);
 
                 entity.SetQuickSightRolesData();
@@ -4396,6 +4395,8 @@ namespace ReportingService.Repo
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_RoleGroups_RoleID");
+
+                entity.SetQuickSightRoleGroupsData();
             });
 
             modelBuilder.Entity<QuicksightUsers>(entity =>
