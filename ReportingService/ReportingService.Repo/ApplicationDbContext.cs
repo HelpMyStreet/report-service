@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using ReportingService.Repo.EntityFramework.Models;
 using ReportingService.Repo.Extensions;
 using Scaffolding.Models;
 using System;
@@ -197,6 +198,10 @@ namespace ReportingService.Repo
         public virtual DbSet<ViewTimeTaken> ViewTimeTaken { get; set; }
         public virtual DbSet<WebsiteRegistrationJourney> WebsiteRegistrationJourney { get; set; }
         public virtual DbSet<WebsiteRequestHelpJourney> WebsiteRequestHelpJourney { get; set; }
+
+        public virtual DbSet<QuicksightRoles> QuicksightRoles { get; set; }
+        public virtual DbSet<QuicksightRoleGroups> QuicksightRoleGroups { get; set; }
+        public virtual DbSet<QuicksightUsers> QuicksightUsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -4364,6 +4369,50 @@ namespace ReportingService.Repo
                 entity.Property(e => e.Source)
                     .HasMaxLength(100)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<QuicksightRoles>(entity =>
+            {
+                entity.ToTable("Role", "Quicksight");
+
+                entity.Property(e => e.RoleName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<QuicksightRoleGroups>(entity =>
+            {
+                entity.HasKey(e => new { e.RoleId, e.GroupId });
+
+                entity.ToTable("RoleGroups", "Quicksight");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.RoleGroups)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RoleGroups_RoleID");
+            });
+
+            modelBuilder.Entity<QuicksightUsers>(entity =>
+            {
+                entity.ToTable("Users", "Quicksight");
+
+                entity.Property(e => e.EmailAddress)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Users_RoleID");
             });
         }
     }
