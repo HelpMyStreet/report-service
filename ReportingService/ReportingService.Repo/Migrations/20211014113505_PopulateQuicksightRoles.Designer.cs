@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReportingService.Repo;
 
 namespace ReportingService.Repo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211014113505_PopulateQuicksightRoles")]
+    partial class PopulateQuicksightRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,203 +32,6 @@ namespace ReportingService.Repo.Migrations
                     b.HasKey("RoleId", "GroupId");
 
                     b.ToTable("RoleGroups","Quicksight");
-
-                    b.HasData(
-                        new
-                        {
-                            RoleId = -33,
-                            GroupId = -33
-                        },
-                        new
-                        {
-                            RoleId = -32,
-                            GroupId = -32
-                        },
-                        new
-                        {
-                            RoleId = -31,
-                            GroupId = -31
-                        },
-                        new
-                        {
-                            RoleId = -23,
-                            GroupId = -23
-                        },
-                        new
-                        {
-                            RoleId = -22,
-                            GroupId = -22
-                        },
-                        new
-                        {
-                            RoleId = -20,
-                            GroupId = -20
-                        },
-                        new
-                        {
-                            RoleId = -17,
-                            GroupId = -17
-                        },
-                        new
-                        {
-                            RoleId = -14,
-                            GroupId = -14
-                        },
-                        new
-                        {
-                            RoleId = -13,
-                            GroupId = -13
-                        },
-                        new
-                        {
-                            RoleId = -12,
-                            GroupId = -12
-                        },
-                        new
-                        {
-                            RoleId = -11,
-                            GroupId = -11
-                        },
-                        new
-                        {
-                            RoleId = -10,
-                            GroupId = -10
-                        },
-                        new
-                        {
-                            RoleId = -9,
-                            GroupId = -9
-                        },
-                        new
-                        {
-                            RoleId = -8,
-                            GroupId = -8
-                        },
-                        new
-                        {
-                            RoleId = -7,
-                            GroupId = -7
-                        },
-                        new
-                        {
-                            RoleId = -6,
-                            GroupId = -6
-                        },
-                        new
-                        {
-                            RoleId = -5,
-                            GroupId = -5
-                        },
-                        new
-                        {
-                            RoleId = -3,
-                            GroupId = -3
-                        },
-                        new
-                        {
-                            RoleId = -2,
-                            GroupId = -2
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -1
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -33
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -32
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -31
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -23
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -22
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -20
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -17
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -14
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -13
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -12
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -11
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -10
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -9
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -8
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -7
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -6
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -5
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -3
-                        },
-                        new
-                        {
-                            RoleId = -1,
-                            GroupId = -2
-                        });
                 });
 
             modelBuilder.Entity("ReportingService.Repo.EntityFramework.Models.QuicksightRoles", b =>
@@ -238,6 +43,7 @@ namespace ReportingService.Repo.Migrations
 
                     b.Property<string>("RoleName")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("varchar(50)")
                         .HasMaxLength(50)
                         .IsUnicode(false);
