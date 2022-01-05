@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReportingService.Repo;
 
 namespace ReportingService.Repo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211019081833_AddMonitoringLastActivity_Step1")]
+    partial class AddMonitoringLastActivity_Step1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1491,7 +1493,6 @@ namespace ReportingService.Repo.Migrations
                     b.ToTable("JobStatus","Lookup");
                 });
 
-
             modelBuilder.Entity("Scaffolding.Models.Location", b =>
                 {
                     b.Property<int>("Id")
@@ -2796,9 +2797,6 @@ namespace ReportingService.Repo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
-
-                    b.Property<string>("FriendlyName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");

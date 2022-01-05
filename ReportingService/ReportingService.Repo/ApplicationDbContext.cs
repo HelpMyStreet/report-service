@@ -87,6 +87,8 @@ namespace ReportingService.Repo
         public virtual DbSet<JobQuestions1> JobQuestions1 { get; set; }
         public virtual DbSet<JobStatus> JobStatus { get; set; }
         public virtual DbSet<JobStatus1> JobStatus1 { get; set; }
+        public virtual DbSet<JobStatusChangeReasonCode> JobStatusChangeReasonCode { get; set; }
+        public virtual DbSet<JobStatusChangeReasonCode1> JobStatusChangeReasonCode1 { get; set; }
         public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<Location1> Location1 { get; set; }
         public virtual DbSet<Location2> Location2 { get; set; }
@@ -98,6 +100,8 @@ namespace ReportingService.Repo
         public virtual DbSet<MonitoringCommunicationMessage> MonitoringCommunicationMessage { get; set; }
         public virtual DbSet<MonitoringTimestamps> MonitoringTimestamps { get; set; }
         public virtual DbSet<MonthlyStats> MonthlyStats { get; set; }
+        public virtual DbSet<MonitoringLastActivity> MonitoringLastActivity { get; set; }
+
         public virtual DbSet<NewRequestNotificationStrategy> NewRequestNotificationStrategy { get; set; }
         public virtual DbSet<NewRequestNotificationStrategy1> NewRequestNotificationStrategy1 { get; set; }
         public virtual DbSet<NewRequestNotificationStrategy2> NewRequestNotificationStrategy2 { get; set; }
@@ -1738,6 +1742,46 @@ namespace ReportingService.Repo
                     .IsFixedLength();
             });
 
+            modelBuilder.Entity<JobStatusChangeReasonCode>(entity =>
+            {
+                entity.HasKey(e => new { e.Id, e.SysChangeVersion });
+
+                entity.ToTable("JobStatusChangeReasonCode", "Lookup");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.SysChangeVersion).HasColumnName("SYS_CHANGE_VERSION");
+
+                entity.Property(e => e.DateFrom)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.SysChangeOperation)
+                    .IsRequired()
+                    .HasColumnName("SYS_CHANGE_OPERATION")
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+            });
+
+            modelBuilder.Entity<JobStatusChangeReasonCode1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("JobStatusChangeReasonCode", "LookupLatest");
+
+                entity.Property(e => e.DateFrom).HasColumnType("datetime");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.SysChangeOperation)
+                    .IsRequired()
+                    .HasColumnName("SYS_CHANGE_OPERATION")
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+            });
+
             modelBuilder.Entity<Location>(entity =>
             {
                 entity.HasKey(e => new { e.Id, e.SysChangeVersion });
@@ -2045,6 +2089,19 @@ namespace ReportingService.Repo
                 entity.Property(e => e.TopActivities).IsUnicode(false);
 
                 entity.Property(e => e.YotiIds).HasColumnName("YotiIDs");
+            });
+
+            modelBuilder.Entity<MonitoringLastActivity>(entity =>
+            {
+                entity.ToTable("LastActivity", "Monitoring");
+
+                entity.HasKey(e => new { e.GroupId });
+
+                entity.Property(e => e.GroupId).ValueGeneratedNever();
+
+                entity.Property(e => e.PercentEverActive).HasColumnName("% Ever Active");
+
+                entity.Property(e => e.PercentActiveWithinLast30Days).HasColumnName("% Active within last 90 days");
             });
 
             modelBuilder.Entity<NewRequestNotificationStrategy>(entity =>
