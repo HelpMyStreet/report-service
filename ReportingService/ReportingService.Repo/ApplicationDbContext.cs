@@ -87,8 +87,7 @@ namespace ReportingService.Repo
         public virtual DbSet<JobQuestions1> JobQuestions1 { get; set; }
         public virtual DbSet<JobStatus> JobStatus { get; set; }
         public virtual DbSet<JobStatus1> JobStatus1 { get; set; }
-        public virtual DbSet<JobStatusChangeReasonCode> JobStatusChangeReasonCode { get; set; }
-        public virtual DbSet<JobStatusChangeReasonCode1> JobStatusChangeReasonCode1 { get; set; }
+        public virtual DbSet<Frequency> Frequency { get; set; }
         public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<Location1> Location1 { get; set; }
         public virtual DbSet<Location2> Location2 { get; set; }
@@ -1742,11 +1741,11 @@ namespace ReportingService.Repo
                     .IsFixedLength();
             });
 
-            modelBuilder.Entity<JobStatusChangeReasonCode>(entity =>
+            modelBuilder.Entity<Frequency>(entity =>
             {
                 entity.HasKey(e => new { e.Id, e.SysChangeVersion });
 
-                entity.ToTable("JobStatusChangeReasonCode", "Lookup");
+                entity.ToTable("Frequency", "Lookup");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
@@ -1755,24 +1754,6 @@ namespace ReportingService.Repo
                 entity.Property(e => e.DateFrom)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.SysChangeOperation)
-                    .IsRequired()
-                    .HasColumnName("SYS_CHANGE_OPERATION")
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength();
-            });
-
-            modelBuilder.Entity<JobStatusChangeReasonCode1>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("JobStatusChangeReasonCode", "LookupLatest");
-
-                entity.Property(e => e.DateFrom).HasColumnType("datetime");
-
-                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.SysChangeOperation)
                     .IsRequired()
