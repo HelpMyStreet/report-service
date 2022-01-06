@@ -24,7 +24,7 @@ namespace ReportingService.Repo.Migrations
                 });
 
             migrationBuilder.Sql(@"
-                CREATE view [LookupLatest].[Frequency] AS SELECT a.[ID],a.[Name],a.[DateFrom],a.[SYS_CHANGE_OPERATION] FROM [Lookup].[Frequency] a inner join (select max(SYS_CHANGE_VERSION) as MaxVersion,ID from [Lookup].[JobStatus] group by ID) latest on a.SYS_CHANGE_VERSION = latest.MaxVersion AND a.ID=Latest.ID WHERE [SYS_CHANGE_OPERATION]<>'d'
+                CREATE view [LookupLatest].[Frequency] AS SELECT a.[ID],a.[Name],a.[DateFrom],a.[SYS_CHANGE_OPERATION] FROM [Lookup].[Frequency] a inner join (select max(SYS_CHANGE_VERSION) as MaxVersion,ID from [Lookup].[Frequency] group by ID) latest on a.SYS_CHANGE_VERSION = latest.MaxVersion AND a.ID=Latest.ID WHERE [SYS_CHANGE_OPERATION]<>'d'
                 ");
         }
 
