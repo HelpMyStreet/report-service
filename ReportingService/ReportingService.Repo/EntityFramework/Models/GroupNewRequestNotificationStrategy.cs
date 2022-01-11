@@ -8,6 +8,7 @@ namespace Scaffolding.Models
         public int GroupId { get; set; }
         public string Group { get; set; }
         public string NewRequestNotificationStrategy { get; set; }
+        public byte? UrgentRequestNotificationStrategyId { get; set; }
         public int? MaxVolunteer { get; set; }
     }
 }
